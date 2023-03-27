@@ -29,7 +29,7 @@ const Register = () => {
   const navigate = useNavigate()
   const { currentUser, error } = useSelector((state) => state?.auth)
 
-  const { login } = useAuthCall()
+  const { register } = useAuthCall()
 
   return (
     <ThemeProvider theme={theme}>
@@ -85,7 +85,7 @@ const Register = () => {
                 }}
                 validationSchema={registerSchema}
                 onSubmit={(values, actions) => {
-                  login(values)
+                  register({ ...values, password2: values.password })
                   actions.resetForm()
                   actions.setSubmitting(false)
                 }}
@@ -94,7 +94,7 @@ const Register = () => {
 
               <Grid sx={{ mt: "1rem", textAlign: "center" }}>
                 <Grid item>
-                  <Link to="/login" variant="body2">
+                  <Link to="/" variant="body2">
                     {"Do you already have an account"}
                   </Link>
                 </Grid>

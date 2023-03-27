@@ -6,9 +6,15 @@ import { useSelector } from "react-redux"
 import { object, string } from "yup"
 
 export const registerSchema = object({
-  username:"",
-  first_name:"",
-  last_name:"",
+  username: string()
+    .max(10, "Kullanıcı adı 10 karakterden az olmalıdır")
+    .required(),
+  first_name: string()
+    .max(20, "İsim 20 karakterden az olmalıdır.")
+    .required("first name is a required field"),
+  last_name: string()
+    .max(30, "Soyisim 30 karakterden az olmalıdır.")
+    .required("last name is a required field"),
   email: string().email("Yanlış email formatı").required("Email zorunludur"),
   password: string()
     .required("Password Zorunludur")
@@ -23,7 +29,13 @@ export const registerSchema = object({
     ),
 })
 
-const RegisterForm = ({ values, handleChange, handleBlur, errors, touched }) => {
+const RegisterForm = ({
+  values,
+  handleChange,
+  handleBlur,
+  errors,
+  touched,
+}) => {
   const { loading } = useSelector((state) => state?.auth)
   return (
     <Form>
@@ -42,33 +54,33 @@ const RegisterForm = ({ values, handleChange, handleBlur, errors, touched }) => 
           variant="outlined"
           onChange={handleChange}
           onBlur={handleBlur}
-          value={values?.email || ""}
-          error={touched.email && Boolean(errors.email)}
-          helperText={touched.email && errors.email}
+          value={values.username}
+          error={touched.username && Boolean(errors.username)}
+          helperText={touched.username && errors.username}
         />
         <TextField
           label="First Name"
-          name="firstname"
-          id="firstname"
+          name="first_name"
+          id="firstName"
           type="text"
           variant="outlined"
           onChange={handleChange}
           onBlur={handleBlur}
-          value={values?.email || ""}
-          error={touched.email && Boolean(errors.email)}
-          helperText={touched.email && errors.email}
+          value={values.first_name}
+          error={touched.first_name && Boolean(errors.first_name)}
+          helperText={touched.first_name && errors.first_name}
         />
         <TextField
           label="Last Name"
-          name="lastname"
+          name="last_name"
           id="lastname"
-          type="email"
+          type="text"
           variant="outlined"
           onChange={handleChange}
           onBlur={handleBlur}
-          value={values?.email || ""}
-          error={touched.email && Boolean(errors.email)}
-          helperText={touched.email && errors.email}
+          value={values.last_name}
+          error={touched.last_name && Boolean(errors.last_name)}
+          helperText={touched.last_name && errors.last_name}
         />
         <TextField
           label="Email"
