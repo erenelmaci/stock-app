@@ -36,7 +36,7 @@ const useAuthCall = () => {
   const logout = async () => {
     dispatch(fetchStart())
     try {
-      const { data } = await axios.post(`${BASE_URL}account/logout/`)
+      await axios.post(`${BASE_URL}account/auth/logout/`)
       dispatch(logoutSuccess())
       toastSuccessNotify("logout performed")
       navigate("/")
