@@ -1,5 +1,5 @@
 import Avatar from "@mui/material/Avatar"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
 import LockIcon from "@mui/icons-material/Lock"
@@ -8,7 +8,6 @@ import Container from "@mui/material/Container"
 import { createTheme } from "@mui/material/styles"
 import { ThemeProvider } from "@emotion/react"
 import { Formik } from "formik"
-import { useSelector } from "react-redux"
 import image from "../assets/result.svg"
 import { blueGrey, grey } from "@mui/material/colors"
 import useAuthCall from "../hooks/useAuthCall"
@@ -26,9 +25,6 @@ const theme = createTheme({
 })
 
 const Register = () => {
-  const navigate = useNavigate()
-  const { currentUser, error } = useSelector((state) => state?.auth)
-
   const { register } = useAuthCall()
 
   return (
