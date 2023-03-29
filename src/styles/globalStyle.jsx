@@ -2,7 +2,7 @@ export const flex = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  gap: 2,
+  gap: 5,
 }
 
 export const btnStyle = {
