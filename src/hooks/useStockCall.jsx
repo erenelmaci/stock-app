@@ -28,8 +28,30 @@ const useStockCall = () => {
       toastErrorNotify(`${url} can not be deleted`)
     }
   }
+  const postStockData = async (url, info) => {
+    dispatch(fetchStart())
+    try {
+      await axiosWithToken.post(`stock/${url}/`, info)
+      getStockData(url)
+      toastSuccessNotify(`${url} successfuly posted`)
+    } catch (error) {
+      dispatch(fetchFail())
+      toastErrorNotify(`${url} can not be posted`)
+    }
+  }
+  const putStockData = async (url, info) => {
+    dispatch(fetchStart())
+    try {
+      await axiosWithToken.put(`stock/${url}/${info.id}/`, info)
+      getStockData(url)
+      toastSuccessNotify(`${url} successfuly updated`)
+    } catch (error) {
+      dispatch(fetchFail())
+      toastErrorNotify(`${url} can not be updated`)
+    }
+  }
 
-  return { getStockData, deleteStockData }
+  return { getStockData, deleteStockData, postStockData, putStockData }
 }
 
 export default useStockCall
