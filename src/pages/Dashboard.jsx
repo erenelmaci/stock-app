@@ -6,14 +6,13 @@ import MuiAppBar from "@mui/material/AppBar"
 import Toolbar from "@mui/material/Toolbar"
 import CssBaseline from "@mui/material/CssBaseline"
 import Typography from "@mui/material/Typography"
-import Divider from "@mui/material/Divider"
 import IconButton from "@mui/material/IconButton"
 import MenuIcon from "@mui/icons-material/Menu"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 import { Button } from "@mui/material"
 import MenuListItems from "../components/MenuListItems"
-import { useNavigate } from "react-router-dom"
+import { Outlet } from "react-router-dom"
 import useAuthCall from "../hooks/useAuthCall"
 
 const drawerWidth = 240
@@ -132,7 +131,7 @@ function Dashboard() {
         sx={{ "& .MuiDrawer-paper": { bgcolor: "#263238" } }}
       >
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton sx={{color:"white"}} onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
@@ -144,6 +143,7 @@ function Dashboard() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
+        <Outlet />
       </Box>
     </Box>
   )

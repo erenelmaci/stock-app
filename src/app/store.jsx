@@ -27,7 +27,7 @@ const store = configureStore({
     stock: stockReducer,
   },
 
-  middleware: (getDefaultMiddleware) =>
+  middleware: (getDefaultMiddleware) => //! redux-persist kullanırken serileştirmede sıkıntı yaşanıyor persist kullanırken middleware kullanıması gerekiyor yoksa hata veriyor !!! 
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],

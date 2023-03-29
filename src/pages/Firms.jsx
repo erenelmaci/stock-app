@@ -1,8 +1,23 @@
-import React from 'react'
+import { Button, Typography } from "@mui/material"
+import { useEffect } from "react"
+import useStockCall from "../hooks/useStockCall"
 
 const Firms = () => {
+  const { getStockData } = useStockCall()
+
+  useEffect(() => {
+    getStockData("firms")
+  }, [])
+
   return (
-    <div>Firms</div>
+    <>
+      <Typography variant="h4" color="error" mb={3}>
+        Firms
+      </Typography>
+      <Button variant="contained" sx={{ backgroundColor: "black" }}>
+        New Firm
+      </Button>
+    </>
   )
 }
 
