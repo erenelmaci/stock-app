@@ -1,16 +1,30 @@
-import { Button, Typography } from "@mui/material"
+import { Button, createTheme, ThemeProvider, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import ProductModal from "../components/modals/ProductModal"
 import useStockCall from "../hooks/useStockCall"
 import * as React from "react"
 import Box from "@mui/material/Box"
-import { DataGrid } from "@mui/x-data-grid"
+import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid"
+import { DeleteForever } from "@material-ui/icons"
+import { btnStyle } from "../styles/globalStyle"
+import { blueGrey, grey } from "@mui/material/colors"
 
 const Products = () => {
-  const { getStockData } = useStockCall()
+  const { getStockData, deleteStockData } = useStockCall()
   const { products } = useSelector((state) => state.stock)
   const [open, setOpen] = useState(false)
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: grey["900"],
+      },
+      secondary: {
+        main: blueGrey["900"],
+      },
+    },
+  })
 
   const columns = [
     {
@@ -56,8 +70,6 @@ const Products = () => {
       sortable: false,
       minWidth: 160,
       flex: 1,
-      valueGetter: (params) =>
-        `${params.row.firstName || ""} ${params.row.lastName || ""}`,
     },
     {
       field: "actions",
@@ -68,6 +80,14 @@ const Products = () => {
       sortable: false,
       minWidth: 160,
       flex: 1,
+      renderCell: ({ id }) => (
+        <GridActionsCellItem
+          sx={btnStyle}
+          icon={<DeleteForever />}
+          label="Delete"
+          onClick={() => deleteStockData("products", id)}
+        />
+      ),
     },
   ]
   const [info, setInfo] = useState({
@@ -82,10 +102,12 @@ const Products = () => {
 
   useEffect(() => {
     getStockData("products")
-  }, [getStockData])
+    getStockData("categories")
+    getStockData("brands")
+  }, [])
 
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <Typography variant="h4" color="error" mb={3}>
         Products
       </Typography>
@@ -104,7 +126,7 @@ const Products = () => {
         setInfo={setInfo}
       />
 
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "100%", marginTop: "2rem" }}>
         <DataGrid
           autoHeight
           rows={products}
@@ -118,9 +140,10 @@ const Products = () => {
           }}
           pageSizeOptions={[5]}
           disableRowSelectionOnClick
+          slots={{ toolbar: GridToolbar }}
         />
       </Box>
-    </div>
+    </ThemeProvider>
   )
 }
 

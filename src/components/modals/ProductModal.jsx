@@ -7,6 +7,11 @@ import { Button, createTheme } from "@mui/material"
 import { blueGrey, grey } from "@mui/material/colors"
 import { ThemeProvider } from "@emotion/react"
 import useStockCall from "../../hooks/useStockCall"
+import InputLabel from "@mui/material/InputLabel"
+import MenuItem from "@mui/material/MenuItem"
+import FormControl from "@mui/material/FormControl"
+import Select from "@mui/material/Select"
+import { useSelector } from "react-redux"
 
 export default function ProductModal({ open, handleClose, info, setInfo }) {
   const theme = createTheme({
@@ -20,7 +25,8 @@ export default function ProductModal({ open, handleClose, info, setInfo }) {
     },
   })
 
-  const { postStockData, putStockData } = useStockCall()
+  const { postStockData } = useStockCall()
+  const { categories } = useSelector((state) => state.stock)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -29,7 +35,6 @@ export default function ProductModal({ open, handleClose, info, setInfo }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    info.id ? putStockData("products", info) : postStockData("products", info)
     handleClose()
     setInfo("")
   }
@@ -47,7 +52,7 @@ export default function ProductModal({ open, handleClose, info, setInfo }) {
       >
         <Box sx={modalStyle}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            New Firm
+            New Products
           </Typography>
           <Box
             sx={{
@@ -59,16 +64,23 @@ export default function ProductModal({ open, handleClose, info, setInfo }) {
             component="form"
             onSubmit={handleSubmit}
           >
-            <TextField
-              label="Firm Name"
-              name="name"
-              id="name"
-              type="text"
-              variant="outlined"
-              value={info?.name}
-              required
-              onChange={handleChange}
-            />
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="category-label">Categories</InputLabel>
+                <Select
+                  labelId="category"
+                  id="category"
+                  // value={age}
+                  label="Category"
+                  onChange={handleChange}
+                >
+                  {categories?.map(({name}) => (
+                    <MenuItem value={10}>{name}</MenuItem>
+                  ))}
+                  
+                </Select>
+              </FormControl>
+            </Box>
             <TextField
               label="Address"
               name="address"
@@ -87,16 +99,6 @@ export default function ProductModal({ open, handleClose, info, setInfo }) {
               variant="outlined"
               required
               value={info?.image}
-              onChange={handleChange}
-            />
-            <TextField
-              label="Phone"
-              name="phone"
-              id="phone"
-              type="tel"
-              variant="outlined"
-              required
-              value={info?.phone}
               onChange={handleChange}
             />
             <Button type="submit" variant="contained">
