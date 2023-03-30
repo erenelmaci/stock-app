@@ -8,7 +8,7 @@ import { blueGrey, grey } from "@mui/material/colors"
 import { ThemeProvider } from "@emotion/react"
 import useStockCall from "../../hooks/useStockCall"
 
-export default function BrandModal({ open, handleClose, info, setInfo }) {
+export default function ProductModal({ open, handleClose, info, setInfo }) {
   const theme = createTheme({
     palette: {
       primary: {
@@ -23,16 +23,15 @@ export default function BrandModal({ open, handleClose, info, setInfo }) {
   const { postStockData, putStockData } = useStockCall()
 
   const handleChange = (e) => {
-    e.preventDefault()
     const { name, value } = e.target
     setInfo({ ...info, [name]: value })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    info.id ? putStockData("brands", info) : postStockData("brands", info)
+    info.id ? putStockData("products", info) : postStockData("products", info)
     handleClose()
-    setInfo({})
+    setInfo("")
   }
 
   return (
@@ -48,7 +47,7 @@ export default function BrandModal({ open, handleClose, info, setInfo }) {
       >
         <Box sx={modalStyle}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            New Brand
+            New Firm
           </Typography>
           <Box
             sx={{
@@ -57,18 +56,28 @@ export default function BrandModal({ open, handleClose, info, setInfo }) {
               gap: 2,
               marginTop: "1rem",
             }}
-            onSubmit={handleSubmit}
             component="form"
+            onSubmit={handleSubmit}
           >
             <TextField
-              label="Brand Name"
+              label="Firm Name"
               name="name"
               id="name"
               type="text"
               variant="outlined"
               value={info?.name}
-              onChange={handleChange}
               required
+              onChange={handleChange}
+            />
+            <TextField
+              label="Address"
+              name="address"
+              id="address"
+              type="text"
+              variant="outlined"
+              required
+              value={info?.address}
+              onChange={handleChange}
             />
             <TextField
               label="Firm Image URL"
@@ -76,12 +85,22 @@ export default function BrandModal({ open, handleClose, info, setInfo }) {
               id="image"
               type="url"
               variant="outlined"
+              required
               value={info?.image}
               onChange={handleChange}
+            />
+            <TextField
+              label="Phone"
+              name="phone"
+              id="phone"
+              type="tel"
+              variant="outlined"
               required
+              value={info?.phone}
+              onChange={handleChange}
             />
             <Button type="submit" variant="contained">
-              Submit Brand
+              Submit Firm
             </Button>
           </Box>
         </Box>

@@ -20,7 +20,7 @@ const useStockCall = () => {
   const deleteStockData = async (url, id) => {
     dispatch(fetchStart())
     try {
-      await axiosWithToken.delete(`stock/firms/${id}/`)
+      await axiosWithToken.delete(`stock/${url}/${id}/`)
       getStockData(url)
       toastSuccessNotify(`${url} successfuly deleted`)
     } catch (error) {

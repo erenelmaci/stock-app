@@ -1,7 +1,8 @@
-import { Button, Grid, Typography } from "@mui/material"
+import { Box, Button, Grid, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import BrandCard from "../components/BrandCard"
+import BrandModal from "../components/modals/BrandModal"
 import useStockCall from "../hooks/useStockCall"
 import { flex } from "../styles/globalStyle"
 
@@ -11,35 +12,34 @@ const Brands = () => {
   const [open, setOpen] = useState(false)
   const [info, setInfo] = useState({})
 
-  console.log(brands)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
 
   useEffect(() => {
     getStockData("brands")
   }, [])
 
   return (
-    <div>
+    <Box>
       <Typography variant="h4" color="error" mb={3}>
         Brands
       </Typography>
       <Button
         variant="contained"
         sx={{ backgroundColor: "black" }}
-        onClick={() => {
-          setInfo({})
-          setOpen(true)
-        }}
+        onClick={handleOpen}
       >
         New Brand
       </Button>
+      <BrandModal open={open} handleClose={handleClose} info={info} setInfo={setInfo} />
       <Grid container sx={flex}>
         {brands?.map((brand) => (
           <Grid item key={brand.id}>
-            <BrandCard brand={brand} setOpen={setOpen} setinfo={setInfo} />
+            <BrandCard brand={brand} setOpen={setOpen} setInfo={setInfo} />
           </Grid>
         ))}
       </Grid>
-    </div>
+    </Box>
   )
 }
 
