@@ -39,6 +39,11 @@ const Sales = () => {
   useEffect(() => {
     getProCatBrandSuccess()
     getStockData("sales")
+    getStockData("purchases")
+    getStockData("products")
+    getStockData("categories")
+    getStockData("brands")
+    getStockData("firms")
   }, [])
 
   const columns = [

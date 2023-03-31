@@ -9,11 +9,11 @@ import { btnStyle } from "../styles/globalStyle"
 import { blueGrey, grey } from "@mui/material/colors"
 import EditIcon from "@mui/icons-material/Edit"
 import { getProCatBrandSuccess } from "../features/stockSlice"
-import ProductModal from "../components/modals/ProductModal"
+import PurchaseModal from "../components/modals/PurchaseModal"
 
-const Sales = () => {
+const Purchases = () => {
   const { getStockData, deleteStockData } = useStockCall()
-  const { sales } = useSelector((state) => state.stock)
+  const { purchases } = useSelector((state) => state.stock)
   const [open, setOpen] = useState(false)
 
   const theme = createTheme({
@@ -27,6 +27,7 @@ const Sales = () => {
     },
   })
   const [info, setInfo] = useState({
+    firm_id: "",
     brand_id: "",
     product_id: "",
     quantity: "",
@@ -38,22 +39,33 @@ const Sales = () => {
 
   useEffect(() => {
     getProCatBrandSuccess()
-    getStockData("sales")
+    getStockData("purchases")
+    getStockData("products")
+    getStockData("categories")
+    getStockData("brands")
+    getStockData("firms")
   }, [])
 
   const columns = [
     {
       field: "createds",
       headerName: "Date",
-      minWidth: 50,
-      maxWidth: 100 ,
+      minWidth: 150,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "firm",
+      headerName: "Firm",
+      flex: 1,
+      minWidth: 100,
       headerAlign: "center",
       align: "center",
     },
 
     {
       field: "brand",
-      headerName: "Firm",
+      headerName: "Brand",
       flex: 1,
       minWidth: 100,
       headerAlign: "center",
@@ -94,7 +106,10 @@ const Sales = () => {
       minWidth: 40,
       headerAlign: "center",
       align: "center",
-      renderCell: ({ id, row: { brand_id, product_id, quantity, price } }) => {
+      renderCell: ({
+        id,
+        row: { brand_id, product_id, quantity, price, firm_id },
+      }) => {
         return [
           <GridActionsCellItem
             key={"edit"}
@@ -102,7 +117,7 @@ const Sales = () => {
             label="Edit"
             onClick={() => {
               setOpen(true)
-              setInfo({ id, brand_id, product_id, quantity, price })
+              setInfo({ id, firm_id, brand_id, product_id, quantity, price })
             }}
             sx={btnStyle}
           />,
@@ -110,7 +125,7 @@ const Sales = () => {
             key={"delete"}
             icon={<DeleteIcon />}
             label="Delete"
-            onClick={() => deleteStockData("sales", id)}
+            onClick={() => deleteStockData("purchases", id)}
             sx={btnStyle}
           />,
         ]
@@ -131,17 +146,17 @@ const Sales = () => {
         New Purchases
       </Button>
 
-      <ProductModal
+      <PurchaseModal
         open={open}
         handleClose={handleClose}
         info={info}
         setInfo={setInfo}
       />
 
-      <Box sx={{ width: "100%", marginTop: "2rem" }}>
+      <Box sx={{ maxWidth: "100%", marginTop: "2rem" }}>
         <DataGrid
           autoHeight
-          rows={sales}
+          rows={purchases}
           columns={columns}
           initialState={{
             pagination: {
@@ -159,4 +174,4 @@ const Sales = () => {
   )
 }
 
-export default Sales
+export default Purchases
