@@ -1,54 +1,49 @@
-import { Card, Title, AreaChart } from "@tremor/react"
+import { Card, Title, LineChart } from "@tremor/react"
+import { useSelector } from "react-redux"
+import { Grid } from "@mui/material"
+const dataFormatter = (number) =>
+  `${Intl.NumberFormat("us").format(number).toString()}`
 
-const chartdata = [
-  {
-    date: "Jan 22",
-    SemiAnalysis: 2890,
-    "The Pragmatic Engineer": 2338,
-  },
-  {
-    date: "Feb 22",
-    SemiAnalysis: 2756,
-    "The Pragmatic Engineer": 2103,
-  },
-  {
-    date: "Mar 22",
-    SemiAnalysis: 3322,
-    "The Pragmatic Engineer": 2194,
-  },
-  {
-    date: "Apr 22",
-    SemiAnalysis: 3470,
-    "The Pragmatic Engineer": 2108,
-  },
-  {
-    date: "May 22",
-    SemiAnalysis: 3475,
-    "The Pragmatic Engineer": 1812,
-  },
-  {
-    date: "Jun 22",
-    SemiAnalysis: 3129,
-    "The Pragmatic Engineer": 1726,
-  },
-]
+const Charts = () => {
+  const { sales, purchases } = useSelector((state) => state.stock)
 
-const dataFormatter = (number) => {
-  return "$ " + Intl.NumberFormat("us").format(number).toString()
+  const salesData = sales.map((item) => ({
+    date: item.createds,
+    sale: Number(item.price_total),
+  }))
+
+  const purchasesData = purchases?.map((item) => ({
+    date: item.createds,
+    purchases: Number(item.price_total),
+  }))
+
+  return (
+    <Grid container justifyContent="center" spacing={2} mt={3}>
+      <Grid item xs={12} sm={12} md={6}>
+        <Card>
+          <Title>Total Sales</Title>
+          <LineChart
+            data={salesData}
+            index="date"
+            categories={["sale"]}
+            colors={["blue"]}
+            valueFormatter={dataFormatter}
+          />
+        </Card>
+      </Grid>
+      <Grid item xs={12} sm={12} md={6}>
+        <Card sx={{ p: 2 }}>
+          <Title>Total Purchases</Title>
+          <LineChart
+            index="date"
+            data={purchasesData}
+            categories={["purchases"]}
+            colors={["red"]}
+            valueFormatter={dataFormatter}
+          />
+        </Card>
+      </Grid>
+    </Grid>
+  )
 }
-
-const Charts = () => (
-  <Card>
-    <Title>Newsletter revenue over time (USD)</Title>
-    <AreaChart
-      className="h-72 mt-4"
-      data={chartdata}
-      index="date"
-      categories={["SemiAnalysis", "The Pragmatic Engineer"]}
-      colors={["indigo", "cyan"]}
-      valueFormatter={dataFormatter}
-    />
-  </Card>
-)
-
 export default Charts

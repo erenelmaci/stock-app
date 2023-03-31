@@ -1,5 +1,4 @@
 import { Provider } from "react-redux"
-import "./App.css"
 import AppRouter from "./router/AppRouter"
 import store, { persistor } from "./app/store"
 import { ToastContainer } from "react-toastify"
