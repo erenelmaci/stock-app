@@ -31,7 +31,12 @@ const Brands = () => {
       >
         New Brand
       </Button>
-      <BrandModal open={open} handleClose={handleClose} info={info} setInfo={setInfo} />
+      <BrandModal
+        open={open}
+        handleClose={handleClose}
+        info={info}
+        setInfo={setInfo}
+      />
       <Grid container sx={flex}>
         {brands?.map((brand) => (
           <Grid item key={brand.id}>
