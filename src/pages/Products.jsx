@@ -5,8 +5,7 @@ import ProductModal from "../components/modals/ProductModal"
 import useStockCall from "../hooks/useStockCall"
 import * as React from "react"
 import Box from "@mui/material/Box"
-import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid"
-import { DeleteForever } from "@material-ui/icons"
+import { DataGrid, GridActionsCellItem, GridDeleteIcon, GridToolbar } from "@mui/x-data-grid"
 import { btnStyle } from "../styles/globalStyle"
 import { blueGrey, grey } from "@mui/material/colors"
 
@@ -83,7 +82,7 @@ const Products = () => {
       renderCell: ({ id }) => (
         <GridActionsCellItem
           sx={btnStyle}
-          icon={<DeleteForever />}
+          icon={<GridDeleteIcon />}
           label="Delete"
           onClick={() => deleteStockData("products", id)}
         />
