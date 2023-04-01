@@ -23,7 +23,7 @@ const Firms = () => {
 
   useEffect(() => {
     getStockData("firms")
-  }, [])
+  }, []) // eslint-disable-line
 
   return (
     <div>

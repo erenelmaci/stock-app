@@ -38,13 +38,16 @@ const Purchases = () => {
   const handleClose = () => setOpen(false)
 
   useEffect(() => {
-    getProCatBrandSuccess()
-    getStockData("purchases")
-    getStockData("products")
-    getStockData("categories")
-    getStockData("brands")
-    getStockData("firms")
-  }, [])
+    const fetchData = async () => {
+      getProCatBrandSuccess()
+      getStockData("purchases")
+      getStockData("products")
+      getStockData("categories")
+      getStockData("brands")
+      getStockData("firms")
+    }
+    fetchData()
+  }, []) // eslint-disable-line
 
   const columns = [
     {

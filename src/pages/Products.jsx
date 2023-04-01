@@ -5,7 +5,12 @@ import ProductModal from "../components/modals/ProductModal"
 import useStockCall from "../hooks/useStockCall"
 import * as React from "react"
 import Box from "@mui/material/Box"
-import { DataGrid, GridActionsCellItem, GridDeleteIcon, GridToolbar } from "@mui/x-data-grid"
+import {
+  DataGrid,
+  GridActionsCellItem,
+  GridDeleteIcon,
+  GridToolbar,
+} from "@mui/x-data-grid"
 import { btnStyle } from "../styles/globalStyle"
 import { blueGrey, grey } from "@mui/material/colors"
 
@@ -100,10 +105,13 @@ const Products = () => {
   const handleClose = () => setOpen(false)
 
   useEffect(() => {
-    getStockData("products")
-    getStockData("categories")
-    getStockData("brands")
-  }, [])
+    const fetchData = async () => {
+      await getStockData("products")
+      await getStockData("categories")
+      await getStockData("brands")
+    }
+    fetchData()
+  }, []) // eslint-disable-line
 
   return (
     <ThemeProvider theme={theme}>

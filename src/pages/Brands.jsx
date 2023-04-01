@@ -17,7 +17,7 @@ const Brands = () => {
 
   useEffect(() => {
     getStockData("brands")
-  }, [])
+  }, []) // eslint-disable-line
 
   return (
     <Box>

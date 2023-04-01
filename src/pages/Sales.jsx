@@ -44,7 +44,7 @@ const Sales = () => {
     getStockData("categories")
     getStockData("brands")
     getStockData("firms")
-  }, [])
+  }, []) // eslint-disable-line
 
   const columns = [
     {

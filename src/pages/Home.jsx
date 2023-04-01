@@ -10,7 +10,7 @@ const Home = () => {
   useEffect(() => {
     getStockData("sales")
     getStockData("purchases")
-  }, [])
+  }, []) // eslint-disable-line
 
   return (
     <div>
